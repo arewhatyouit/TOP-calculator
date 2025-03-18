@@ -144,6 +144,25 @@ document.querySelector("#btn-clear").addEventListener("click", (event) => {
 
   console.log(displayContent.textContent);
 });
+
+
+document.querySelector("#btn-add").addEventListener("click", (event) =>{
+    const displayContent = document.querySelector("#display-content");
+    let op = "+";
+    let array = [`${displayContent.textContent}`];
+    displayContent.textContent = "";
+    console.log(array);
+    console.log(op);
+});
+
+document.querySelector("#btn-equals").addEventListener("click", (event) =>{
+    const displayContent = document.querySelector("#display-content");
+    array = array.push(displayContent.textContent);
+    displayContent.textContent = "";
+    console.log(array);
+    console.log(op);
+});
+
 function operate(num1, num2, op) {
   return op(num1, num2);
 }
