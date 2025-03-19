@@ -1,44 +1,29 @@
-let operator;
 let array = [];
+let operator = "";
+function numberHandler(num) {
+  return function (event) {
+    const displayContent = document.querySelector("#display-content");
 
-function numberHandler (num) {
-  return function(event) {
-  const displayContent = document.querySelector("#display-content");
-  console.log("Button was pressed!")
-
-  if (array.length === 3) {
-    console.log("array.length === 3  num-btn activated");
-    array = [];
-    displayContent.textContent = "";
-    displayContent.textContent += num;
-  }
-  
-  else if ((array.length === 1 && operator === "*") || (array.length === 1 && operator === "/")) {
-    console.log("push 1");
-    console.log(operator);
-    console.log(array);
-    array.push(Number("1"));
-    displayContent.textContent = "";
-    displayContent.textContent += num;
-  } 
-  
-  else if (array.length === 1) {
-    console.log("array.length === 1 num-btn activated");
-    console.log(operator);
-    console.log(array);
-    array.push(Number("0"));
-    displayContent.textContent = "";
-    displayContent.textContent += num;
-  } 
-  
-  else {
-    console.log("Standard num-btn activated");
-    console.log(operator);
-    console.log(array);
-    displayContent.textContent += num;
+    if (array.length === 3) {
+      array = [];
+      displayContent.textContent = "";
+      displayContent.textContent += num;
+    } else if (
+      (array.length === 1 && operator === "*") ||
+      (array.length === 1 && operator === "/")
+    ) {
+      array.push(Number("1"));
+      displayContent.textContent = "";
+      displayContent.textContent += num;
+    } else if (array.length === 1) {
+      array.push(Number("0"));
+      displayContent.textContent = "";
+      displayContent.textContent += num;
+    } else {
+      displayContent.textContent += num;
+    }
   };
-};
-};
+}
 
 document.querySelector("#btn-7").addEventListener("click", numberHandler("7"));
 document.querySelector("#btn-8").addEventListener("click", numberHandler("8"));
@@ -53,15 +38,15 @@ document.querySelector("#btn-0").addEventListener("click", numberHandler("0"));
 
 document.querySelector("#btn-percent").addEventListener("click", (event) => {
   const displayContent = document.querySelector("#display-content");
-  displayContent.textContent = displayContent.textContent * .01;
+  displayContent.textContent = displayContent.textContent * 0.01;
 });
 
 document.querySelector("#btn-point").addEventListener("click", (event) => {
   const displayContent = document.querySelector("#display-content");
 
-    if (displayContent.textContent.includes(".")) {
-    console.log("Has point!");
-    return;  } else {
+  if (displayContent.textContent.includes(".")) {
+    return;
+  } else {
     displayContent.textContent = displayContent.textContent + ".";
   }
 });
@@ -69,127 +54,83 @@ document.querySelector("#btn-point").addEventListener("click", (event) => {
 document.querySelector("#btn-plus-min").addEventListener("click", (event) => {
   const displayContent = document.querySelector("#display-content");
   if (displayContent.textContent.charAt(0) === "-") {
-    console.log("Minus triggered");
-    console.log(displayContent.textContent);
     displayContent.textContent = displayContent.textContent.replace("-", "");
-    console.log(displayContent.textContent);
   } else {
     displayContent.textContent = "-" + displayContent.textContent;
-  };
-
-}); 
+  }
+});
 
 document.querySelector("#btn-clear").addEventListener("click", (event) => {
   const displayContent = document.querySelector("#display-content");
   operator = "";
-  array = "";
+  array = [];
   displayContent.textContent = "";
-
-  console.log(displayContent.textContent);
 });
 
-document.querySelector("#btn-add").addEventListener("click", (event) => {
-  const displayContent = document.querySelector("#display-content");
-  operator = "+";
-
-  if (array.length === 2) {
-    console.log("Triggered array.lengh === 2 btn-add");
-    array.push(Number(displayContent.textContent));
-    const result = opSelect(operator, array);
-    displayContent.textContent = result;
-    array = [Number(displayContent.textContent)];
-    console.log(operator);
-    console.log(array);
-  } else {
-    console.log("standard btn-add");
-    array = [Number(displayContent.textContent)];
-    console.log(operator);
-    console.log(array);
-  }
-});
-
-document.querySelector("#btn-subtract").addEventListener("click", (event) => {
-  const displayContent = document.querySelector("#display-content");
-  operator = "-";
-
-  if (array.length === 2) {
-    console.log("Triggered array.lengh === 2 btn-subtract");
-    array.push(Number(displayContent.textContent));
-    const result = opSelect(operator, array);
-    displayContent.textContent = result;
-    array = [Number(displayContent.textContent)];
-    console.log(operator);
-    console.log(array);
-  } else {
-    console.log("standard btn-subtract");
-    array = [Number(displayContent.textContent)];
-    console.log(operator);
-    console.log(array);
-  }
-});
-
-document.querySelector("#btn-multiply").addEventListener("click", (event) => {
-  const displayContent = document.querySelector("#display-content");
-  operator = "*";
-
-  if (array.length === 2) {
-    console.log("Triggered array.lengh === 2 btn-add");
-    console.log(array);
-    array.push(Number(displayContent.textContent));
-    console.log(operator);
-    console.log(array);
-    const result = opSelect(operator, array);
-    displayContent.textContent = result;
-    array = [Number(displayContent.textContent)];
-    console.log(operator);
-    console.log(array);
-  } else {
-    console.log("standard btn-add");
-    array = [Number(displayContent.textContent)];
-    console.log(operator);
-    console.log(array);
-  }
-});
-
-document.querySelector("#btn-divide").addEventListener("click", (event) => {
-  const displayContent = document.querySelector("#display-content");
-  operator = "/";
-
-  if (array.length === 2) {
-    console.log("Triggered array.lengh === 2 btn-add");
-    console.log(array);
-    array.push(Number(displayContent.textContent));
-    console.log(operator);
-    console.log(array);
-    const result = opSelect(operator, array);
-    displayContent.textContent = result;
-    array = [Number(displayContent.textContent)];
-    console.log(operator);
-    console.log(array);
-  } else {
-    console.log("standard btn-add");
-    array = [Number(displayContent.textContent)];
-    console.log(operator);
-    console.log(array);
-  }
-});
-
-//Logic for equals button
+//TODO (btn-equals) Add rounding logic using Math.round(num * 100000), will need to validate if number has a decimal point. 
 document.querySelector("#btn-equals").addEventListener("click", (event) => {
   const displayContent = document.querySelector("#display-content");
-  array.push(Number(displayContent.textContent));
 
-  if (array.length === 2 || array.length === 1) {
-    console.log("Equals do nothing triggered!");
-    console.log(array);
+  if (array.length === 0) {
+    return;
+  } else if (array.length === 2) {
+    console.log("=== 2 equals btn");
+    array.push(Number(displayContent.textContent));
+    console.log(`Array: ${array}`)
+    if (array[2] === 0 && operator === "/") {
+      console.log("Trying to divide by zero!");
+      console.log(array);
+      displayContent.textContent = "Can't divide by zero!";
+      array = [];
+      return;
+    } else {
+      const result = opSelect(operator, array);
+      displayContent.textContent = result;
+      array = [Number(displayContent.textContent)];
+    };
   } else {
-    console.log("Standard equals triggered");
-    console.log(array);
-    const result = opSelect(operator, array);
-    displayContent.textContent = result;
+    console.log("Standared equals btn");
+    array.push(Number(displayContent.textContent));
+    array = [Number(displayContent.textContent)];
   }
 });
 
+//TODO (operatorHandler) Add rounding logic using Math.round(num * 100000), will need to validate if number has a decimal point. 
+function operatorHandler(currentoperator) {
+  return function (event) {
+    console.log(array);
+    const displayContent = document.querySelector("#display-content");
+
+    if (array.length === 2) {
+      console.log("triggered === 2 operatorHandler");
+      console.log(array);
+      array.push(Number(displayContent.textContent));
+      const result = opSelect(operator, array);
+      displayContent.textContent = result;
+      array = [Number(displayContent.textContent)];
+      console.log(array);
+    } else {
+      console.log("Trigger standard operatorHandler");
+      console.log(array);
+      array = [Number(displayContent.textContent)];
+      console.log(array);
+    }
+    operator = currentoperator;
+  };
+}
+
+document
+  .querySelector("#btn-add")
+  .addEventListener("click", operatorHandler("+"));
+document
+  .querySelector("#btn-subtract")
+  .addEventListener("click", operatorHandler("-"));
+document
+  .querySelector("#btn-multiply")
+  .addEventListener("click", operatorHandler("*"));
+document
+  .querySelector("#btn-divide")
+  .addEventListener("click", operatorHandler("/"));
 
 function opSelect(operator, array) {
   if (operator === "+") {
@@ -201,4 +142,7 @@ function opSelect(operator, array) {
   } else if (operator === "/") {
     return array.reduce((total, element) => total / element);
   }
-};
+}
+
+TODO Optional: Add keyboard support
+TODO Optional 2: Add backspace button
