@@ -31,6 +31,10 @@
     justify-content: center;
 }
 
+#btn-0 {
+    width:124px;
+}
+
 .button {
     box-sizing: border-box;
     width: 60px;
