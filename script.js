@@ -1,5 +1,6 @@
 let array = [];
 let operator = "";
+let num2Marker = false;
 
 function numberHandler(num) {
   return function (event) {
@@ -9,16 +10,29 @@ function numberHandler(num) {
       array = [];
       displayContent.textContent = "";
       displayContent.textContent += num;
-    } else if (array.length === 1) {
+      console.log("num if");
+      console.log(array);
+      console.log(operator);
+    } else if (array.length === 1 && !num2Marker) {
       displayContent.textContent = "";
       displayContent.textContent += num;
-      array.push(Number(displayContent.textContent));
+      num2Marker = true;
+      console.log("num else if");
+      console.log(array);
+      console.log(operator);
+    } else if (array.length === 1 && num2Marker) {
+      displayContent.textContent += num;
+      console.log("num else if no2");
+      console.log(array);
+      console.log(operator);
     } else {
       displayContent.textContent += num;
+      console.log("num else");
+      console.log(array);
+      console.log(operator);
     }
   };
 }
-
 document.querySelector("#btn-7").addEventListener("click", numberHandler("7"));
 document.querySelector("#btn-8").addEventListener("click", numberHandler("8"));
 document.querySelector("#btn-9").addEventListener("click", numberHandler("9"));
@@ -39,22 +53,23 @@ function operatorHandler(currentoperator) {
       displayContent.textContent = result;
       array = [result];
       operator = currentoperator;
+      num2Marker = false;
+      console.log("op if")
+      console.log(array);
+      console.log(operator);
     } else if (array.length === 1) {
-      if (
-        operator === "/" ||
-        operator === "*" ||
-        operator === "-" ||
-        operator === "+"
-      ) {
-        const result = opSelect(operator, array);
-        displayContent.textContent = result;
-        operator = currentoperator;
-      } else {
-        operator = currentoperator;
-      }
+      operator = currentoperator;
+      num2Marker = false;
+      console.log("op else if")
+      console.log(array);
+      console.log(operator);
     } else {
       array.push(Number(displayContent.textContent));
       operator = currentoperator;
+      num2Marker = false;
+      console.log("op else")
+      console.log(array);
+      console.log(operator);
     }
   };
 }
@@ -114,6 +129,7 @@ document.querySelector("#btn-clear").addEventListener("click", (event) => {
   const displayContent = document.querySelector("#display-content");
   operator = "";
   array = [];
+  num2Marker = false;
   displayContent.textContent = "";
 });
 
@@ -127,15 +143,18 @@ document.querySelector("#btn-equals").addEventListener("click", (event) => {
     if (array[1] === 0 && operator === "/") {
       displayContent.textContent = "Can't divide by zero!";
       array = [];
+      num2Marker = false;
       return;
     } else {
       const result = opSelect(operator, array);
       displayContent.textContent = result;
       array = [result];
+      num2Marker = false;
     }
   } else {
     const result = opSelect(operator, array);
     displayContent.textContent = result;
     array = [result];
+    num2Marker = false;
   }
 });
