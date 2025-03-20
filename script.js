@@ -1,24 +1,18 @@
 let array = [];
 let operator = "";
+
 function numberHandler(num) {
   return function (event) {
     const displayContent = document.querySelector("#display-content");
 
-    if (array.length === 3) {
+    if (array.length === 2) {
       array = [];
       displayContent.textContent = "";
       displayContent.textContent += num;
-    } else if (
-      (array.length === 1 && operator === "*") ||
-      (array.length === 1 && operator === "/")
-    ) {
-      array.push(Number("1"));
-      displayContent.textContent = "";
-      displayContent.textContent += num;
     } else if (array.length === 1) {
-      array.push(Number("0"));
       displayContent.textContent = "";
       displayContent.textContent += num;
+      array.push(Number(displayContent.textContent));
     } else {
       displayContent.textContent += num;
     }
@@ -36,84 +30,32 @@ document.querySelector("#btn-2").addEventListener("click", numberHandler("2"));
 document.querySelector("#btn-3").addEventListener("click", numberHandler("3"));
 document.querySelector("#btn-0").addEventListener("click", numberHandler("0"));
 
-document.querySelector("#btn-percent").addEventListener("click", (event) => {
-  const displayContent = document.querySelector("#display-content");
-  displayContent.textContent = displayContent.textContent * 0.01;
-});
-
-document.querySelector("#btn-point").addEventListener("click", (event) => {
-  const displayContent = document.querySelector("#display-content");
-
-  if (displayContent.textContent.includes(".")) {
-    return;
-  } else {
-    displayContent.textContent = displayContent.textContent + ".";
-  }
-});
-
-document.querySelector("#btn-plus-min").addEventListener("click", (event) => {
-  const displayContent = document.querySelector("#display-content");
-  if (displayContent.textContent.charAt(0) === "-") {
-    displayContent.textContent = displayContent.textContent.replace("-", "");
-  } else {
-    displayContent.textContent = "-" + displayContent.textContent;
-  }
-});
-
-document.querySelector("#btn-clear").addEventListener("click", (event) => {
-  const displayContent = document.querySelector("#display-content");
-  operator = "";
-  array = [];
-  displayContent.textContent = "";
-});
-
-document.querySelector("#btn-equals").addEventListener("click", (event) => {
-  const displayContent = document.querySelector("#display-content");
-
-  if (array.length === 0) {
-    return;
-  } else if (array.length === 2) {
-    console.log("=== 2 equals btn");
-    array.push(Number(displayContent.textContent));
-    console.log(`Array: ${array}`)
-    if (array[2] === 0 && operator === "/") {
-      console.log("Trying to divide by zero!");
-      console.log(array);
-      displayContent.textContent = "Can't divide by zero!";
-      array = [];
-      return;
-    } else {
-      const result = opSelect(operator, array);
-      displayContent.textContent = result;
-      array = [Number(displayContent.textContent)];
-    };
-  } else {
-    console.log("Standared equals btn");
-    array.push(Number(displayContent.textContent));
-    array = [Number(displayContent.textContent)];
-  }
-});
-
 function operatorHandler(currentoperator) {
   return function (event) {
-    console.log(array);
     const displayContent = document.querySelector("#display-content");
 
     if (array.length === 2) {
-      console.log("triggered === 2 operatorHandler");
-      console.log(array);
-      array.push(Number(displayContent.textContent));
       const result = opSelect(operator, array);
       displayContent.textContent = result;
-      array = [Number(displayContent.textContent)];
-      console.log(array);
+      array = [result];
+      operator = currentoperator;
+    } else if (array.length === 1) {
+      if (
+        operator === "/" ||
+        operator === "*" ||
+        operator === "-" ||
+        operator === "+"
+      ) {
+        const result = opSelect(operator, array);
+        displayContent.textContent = result;
+        operator = currentoperator;
+      } else {
+        operator = currentoperator;
+      }
     } else {
-      console.log("Trigger standard operatorHandler");
-      console.log(array);
-      array = [Number(displayContent.textContent)];
-      console.log(array);
+      array.push(Number(displayContent.textContent));
+      operator = currentoperator;
     }
-    operator = currentoperator;
   };
 }
 
@@ -141,3 +83,59 @@ function opSelect(operator, array) {
     return array.reduce((total, element) => total / element);
   }
 }
+
+document.querySelector("#btn-percent").addEventListener("click", (event) => {
+  const displayContent = document.querySelector("#display-content");
+  displayContent.textContent = displayContent.textContent * 0.01;
+});
+
+document.querySelector("#btn-point").addEventListener("click", (event) => {
+  const displayContent = document.querySelector("#display-content");
+
+  if (displayContent.textContent.includes(".")) {
+    return;
+  } else {
+    displayContent.textContent = displayContent.textContent + ".";
+  }
+});
+
+document.querySelector("#btn-plus-min").addEventListener("click", (event) => {
+  const displayContent = document.querySelector("#display-content");
+  if (displayContent.textContent.charAt(0) === "-") {
+    displayContent.textContent = displayContent.textContent.replace("-", "");
+    array = [Number(displayContent.textContent)];
+  } else {
+    displayContent.textContent = "-" + displayContent.textContent;
+    array = [Number(displayContent.textContent)];
+  }
+});
+
+document.querySelector("#btn-clear").addEventListener("click", (event) => {
+  const displayContent = document.querySelector("#display-content");
+  operator = "";
+  array = [];
+  displayContent.textContent = "";
+});
+
+document.querySelector("#btn-equals").addEventListener("click", (event) => {
+  const displayContent = document.querySelector("#display-content");
+
+  if (array.length === 0) {
+    return;
+  } else if (array.length === 1) {
+    array.push(Number(displayContent.textContent));
+    if (array[1] === 0 && operator === "/") {
+      displayContent.textContent = "Can't divide by zero!";
+      array = [];
+      return;
+    } else {
+      const result = opSelect(operator, array);
+      displayContent.textContent = result;
+      array = [result];
+    }
+  } else {
+    const result = opSelect(operator, array);
+    displayContent.textContent = result;
+    array = [result];
+  }
+});
