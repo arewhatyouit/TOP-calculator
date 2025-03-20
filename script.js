@@ -67,7 +67,6 @@ document.querySelector("#btn-clear").addEventListener("click", (event) => {
   displayContent.textContent = "";
 });
 
-//TODO (btn-equals) Add rounding logic using Math.round(num * 100000), will need to validate if number has a decimal point. 
 document.querySelector("#btn-equals").addEventListener("click", (event) => {
   const displayContent = document.querySelector("#display-content");
 
@@ -95,7 +94,6 @@ document.querySelector("#btn-equals").addEventListener("click", (event) => {
   }
 });
 
-//TODO (operatorHandler) Add rounding logic using Math.round(num * 100000), will need to validate if number has a decimal point. 
 function operatorHandler(currentoperator) {
   return function (event) {
     console.log(array);
@@ -143,6 +141,3 @@ function opSelect(operator, array) {
     return array.reduce((total, element) => total / element);
   }
 }
-
-TODO Optional: Add keyboard support
-TODO Optional 2: Add backspace button
