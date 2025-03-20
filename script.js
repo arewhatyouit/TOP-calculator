@@ -10,29 +10,18 @@ function numberHandler(num) {
       array = [];
       displayContent.textContent = "";
       displayContent.textContent += num;
-      console.log("num if");
-      console.log(array);
-      console.log(operator);
     } else if (array.length === 1 && !num2Marker) {
       displayContent.textContent = "";
       displayContent.textContent += num;
       num2Marker = true;
-      console.log("num else if");
-      console.log(array);
-      console.log(operator);
     } else if (array.length === 1 && num2Marker) {
       displayContent.textContent += num;
-      console.log("num else if no2");
-      console.log(array);
-      console.log(operator);
     } else {
       displayContent.textContent += num;
-      console.log("num else");
-      console.log(array);
-      console.log(operator);
     }
   };
 }
+
 document.querySelector("#btn-7").addEventListener("click", numberHandler("7"));
 document.querySelector("#btn-8").addEventListener("click", numberHandler("8"));
 document.querySelector("#btn-9").addEventListener("click", numberHandler("9"));
@@ -54,22 +43,13 @@ function operatorHandler(currentoperator) {
       array = [result];
       operator = currentoperator;
       num2Marker = false;
-      console.log("op if")
-      console.log(array);
-      console.log(operator);
     } else if (array.length === 1) {
       operator = currentoperator;
       num2Marker = false;
-      console.log("op else if")
-      console.log(array);
-      console.log(operator);
     } else {
       array.push(Number(displayContent.textContent));
       operator = currentoperator;
       num2Marker = false;
-      console.log("op else")
-      console.log(array);
-      console.log(operator);
     }
   };
 }
