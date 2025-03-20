@@ -1,6 +1,6 @@
 # JavaScript Calculator
 
-A simple calculator built with vanilla JavaScript that supports basic arithmetic operations.
+A simple calculator built with vanilla JavaScript that supports basic arithmetic operations (+, -, *, /).
 
 ## Features
 
@@ -61,4 +61,4 @@ This calculator was built as a learning project to practice JavaScript fundament
 
 ---
 
-Created by [Your Name] as part of [The Odin Project](https://www.theodinproject.com/)
+Created by Isaac Noyes as part of [The Odin Project](https://www.theodinproject.com/)
